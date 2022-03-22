@@ -49,5 +49,28 @@ def getAIAData(name, birth, gender):
 
     driver.close()
 
+def getLinaData(name, birth, gender):
+    driver.get(
+        "https://direct.lina.co.kr/product/ess/dtc01/easy")
+    birthInput = driver.find_element_by_xpath('//*[@id="birthday"]')
+    birthInput.send_keys(birth)
+    # Case : 남자
+    if gender == 0:
+        mbutton = driver.find_element_by_xpath(
+            '//*[@id="main_btn_male"]')
+        mbutton.click()
 
-getAIAData("김상훈", "980828", 0)
+    # Case : 여자
+    elif gender == 1:
+        wbutton = driver.find_element_by_xpath(
+            '//*[@id="main_btn_female"]')
+        wbutton.click()
+    resultBtn = driver.find_element_by_xpath('//*[@id="btn_direct_dental_cal"]/span')
+    resultBtn.click();
+
+    driver.implicitly_wait(2)
+    price = driver.find_element_by_xpath('//*[@id="contents"]/div[2]/div[2]/div[2]/div/table/tbody[1]/tr[1]/td[2]').text;
+    print(price)
+
+
+getLinaData("kumahoon", "001212", 1)
